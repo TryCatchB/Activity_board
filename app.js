@@ -9,7 +9,7 @@ class DashBoardItem {
   static PERIODS = {
     daily: "day",
     weekly: "week",
-    montly: "month",
+    monthly: "month",
   };
 
   constructor(data, container = ".dashboard__content", view = "weekly") {
