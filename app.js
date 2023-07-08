@@ -1,8 +1,32 @@
+document.addEventListener("DOMContentLoaded", () => {
+  getDashBoardData().then((data) => {
+    const activities = data.map((activity) => new DashBoardItem(activity));
+    const selectors = document.querySelectorAll(".view-selector__item");
+
+    addActiveClasses(selectors, activities, "view-selector__item_active");
+  });
+});
+
 async function getDashBoardData(url = "/data.json") {
   const response = await fetch(url);
   const data = await response.json();
 
   return data;
+}
+
+function addActiveClasses(selectors, activities, activeClass) {
+  selectors.forEach((selector) =>
+    selector.addEventListener("click", () => {
+      selectors.forEach((sel) => {
+        if (sel.classList.contains(activeClass)) {
+          sel.classList.remove(activeClass);
+        }
+      });
+      selector.classList.add(activeClass);
+      const currentView = selector.innerText.trim().toLowerCase();
+      activities.forEach((activity) => activity.changeView(currentView));
+    })
+  );
 }
 
 class DashBoardItem {
@@ -66,23 +90,3 @@ class DashBoardItem {
     } - ${previous}hrs`;
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  getDashBoardData().then((data) => {
-    const activities = data.map((activity) => new DashBoardItem(activity));
-    const selectors = document.querySelectorAll(".view-selector__item");
-
-    selectors.forEach((selector) =>
-      selector.addEventListener("click", () => {
-        selectors.forEach((sel) => {
-          if (sel.classList.contains("view-selector__item_active")) {
-            sel.classList.remove("view-selector__item_active");
-          }
-        });
-        selector.classList.add("view-selector__item_active");
-        const currentView = selector.innerText.trim().toLowerCase();
-        activities.forEach((activity) => activity.changeView(currentView));
-      })
-    );
-  });
-});
