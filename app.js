@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const activities = data.map((activity) => new DashBoardItem(activity));
     const selectors = document.querySelectorAll(".view-selector__item");
 
-    addActiveClasses(selectors, activities, "view-selector__item_active");
+    addActiveClass(selectors, activities, "view-selector__item_active");
   });
 });
 
@@ -14,19 +14,22 @@ async function getDashBoardData(url = "/data.json") {
   return data;
 }
 
-function addActiveClasses(selectors, activities, activeClass) {
-  selectors.forEach((selector) =>
-    selector.addEventListener("click", () => {
-      selectors.forEach((sel) => {
-        if (sel.classList.contains(activeClass)) {
-          sel.classList.remove(activeClass);
-        }
+function addActiveClass(viewSelectors, activities, activeClass) {
+  const changeView = (currentView) => {
+    activities.forEach((activity) => activity.changeView(currentView));
+  };
+
+  viewSelectors.forEach((viewSelector) => {
+    viewSelector.addEventListener("click", () => {
+      const currentView = viewSelector.innerText.toLowerCase();
+
+      viewSelectors.forEach((viewSel) => {
+        viewSel.classList.toggle(activeClass, viewSel === viewSelector);
       });
-      selector.classList.add(activeClass);
-      const currentView = selector.innerText.trim().toLowerCase();
-      activities.forEach((activity) => activity.changeView(currentView));
-    })
-  );
+
+      changeView(currentView);
+    });
+  });
 }
 
 class DashBoardItem {
