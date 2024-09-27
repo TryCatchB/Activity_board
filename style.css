@@ -61,6 +61,7 @@ body {
     border-radius: var(--radii);
     background-repeat: no-repeat;
     background-position: 92% -8%;
+
     &:hover .tracking-card {
       background-color: var(--blue-500);
     }
@@ -134,12 +135,13 @@ body {
     font-size: 0.75rem;
     color: var(--blue-200);
     cursor: pointer;
+    
     &:hover {
       color: white;
     }
   }
 
-  .view-selector__item_active {
+  .view-selector__item-active {
     color: white;
   }
 }
@@ -174,13 +176,11 @@ body {
     color: var(--blue-200);
   }
 
-  .tracking-card__time,
-  .tracking-card__prev-period {
+  :is(.tracking-card__time, .tracking-card__prev-period) {
     font-weight: var(--weight-light);
   }
 
-  .tracking-card__header,
-  .tracking-card__boby {
+  :is(.tracking-card__header, .tracking-card__boby) {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -230,17 +230,15 @@ body {
       font-size: 3rem;
     }
 
-    .tracking-card__header,
-    .tracking-card__time {
+    :is(.tracking-card__header, .tracking-card__time) {
       &:not(:last-child) {
         margin-bottom: 0.75rem;
       }
     }
   }
 
-  .info-card,
-  .tracking-card__boby {
-    flex-direction: column;
+  :is(.info-card, .tracking-card__boby) {
+     flex-direction: column;
     align-items: flex-start;
   }
 }
